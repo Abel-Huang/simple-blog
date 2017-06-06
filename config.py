@@ -20,7 +20,20 @@ class DevelopmentConfig(Config):
     MAIL_USE_TLS=True
     MAIL_USERNAME=os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    SQLALCHEMY_DATABASE_URI=os.environ.get('SQLALCHEMY_DATABASE_URI')
+    # 首先会在环境变量中寻找， 如果未找到则会直接使用默认数据库
+    SQLALCHEMY_DATABASE_URI=os.environ.get('DEV_DATABASE_URL') or 'mysql://root@localhost:3306/flask-blog'
 
 class TestingConfig(Config):
-    
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+config={
+    'development':DevelopmentConfig,
+    'testing':TestingConfig,
+    'production':ProductionConfig,
+    'default':DevelopmentConfig
+}
+
