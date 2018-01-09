@@ -64,6 +64,7 @@ public class FileController {
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable String id){
         fileService.removeFile(id);
+        return null;
     }
 
 }
