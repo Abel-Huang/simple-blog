@@ -57,4 +57,11 @@ public interface UserService {
      * @return
      */
     Page<User> listUsersByNameLike(String name, Pageable pageable);
+
+    /**
+     *  通过用户名获取用户
+     * @param username
+     * @return
+     */
+    User getUserByUsername(String username);
 }

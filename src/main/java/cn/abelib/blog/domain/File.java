@@ -40,6 +40,16 @@ public class File {
         this.content = content;
     }
 
+    public File(String id, String name, String contentType, long size, Date uploadDate, String md5, String path){
+        this.id = id;
+        this.name = name;
+        this.contentType = contentType;
+        this.size = size;
+        this.uploadDate = uploadDate;
+        this.md5 = md5;
+        this.path = path;
+    }
+
     public String getId() {
         return id;
     }

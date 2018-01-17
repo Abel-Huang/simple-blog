@@ -5,7 +5,7 @@ import cn.abelib.blog.util.http.Meta;
 import cn.abelib.blog.util.http.Response;
 import cn.abelib.blog.domain.User;
 import cn.abelib.blog.service.UserService;
-import cn.abelib.blog.util.http.ResponseTool;
+import cn.abelib.blog.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class UserController {
     public Response view(@PathVariable("id") Long id){
         User user = userService.getUserById(id);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseTool.validator(user, meta);
+        return ResponseUtil.validator(user, meta);
     }
 
     /**
@@ -45,7 +45,7 @@ public class UserController {
             users.add(user);
         }
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseTool.validator(users, meta);
+        return ResponseUtil.validator(users, meta);
     }
 
     /**
@@ -57,7 +57,7 @@ public class UserController {
     public Response addUser(@RequestBody User user){
         userService.addUser(user);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseTool.validator(user, meta);
+        return ResponseUtil.validator(user, meta);
     }
 
     /**
@@ -83,6 +83,6 @@ public class UserController {
     public Response update(@PathVariable("id") Long id){
         User user = userService.getUserById(id);
         Meta meta = new Meta(200, "success");
-        return ResponseTool.validator(user, meta);
+        return ResponseUtil.validator(user, meta);
     }
 }

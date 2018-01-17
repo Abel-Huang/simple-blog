@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService{
         name = "%" + name + "%";
         return userRepository.findByNameLike(name, pageable);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

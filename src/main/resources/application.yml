@@ -1,7 +1,9 @@
+
 server:
   port: 8080
 
 spring:
+    # mysql数据源
     datasource:
         name: test
         url: jdbc:mysql://localhost:3306/blog_data?characterEncoding=UTF-8
@@ -24,13 +26,24 @@ spring:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
 
+    # 文件服务器设置
     http:
         multipart:
             max-file-size: 1MB
             max-request-size: 1MB
 
     data:
+    # mongodb 数据源
         mongodb:
-            uri: mongodb:localhost:27017/blog
+            uri: mongodb://localhost:27017/blog
+    # elasticsearch 数据源
+        elasticsearch:
+            cluster-nodes: localhost:9300
+            properties:
+                transport:
+                    tcp:
+                        connection_timeout=120s
 
-
+file:
+    server:
+        url: http://localhost:8080/upload
