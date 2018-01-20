@@ -4,7 +4,7 @@ package cn.abelib.blog.util.http;
 
 
 /**
- * Created by abel on 2018/1/3.
+ * Created by abel on 2017/11/3.
  * 元信息类, 用于构建Response
  */
 public class Meta{

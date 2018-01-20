@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Created by abel on 2017/12/28.
+ * Created by abel on 2017/10/28.
  *  Blog的资源库接口
  */
 public interface BlogRepository extends JpaRepository<Blog, Long> {

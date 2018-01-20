@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Created by abel on 2018/1/4.
- * 文件实体类
+ * Created by abel on  2017/11/4.
+ * File mongo文档类  文件
  */
 @Document
 public class File {

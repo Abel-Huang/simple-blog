@@ -1,6 +1,7 @@
 package cn.abelib.blog.service.impl;
 
 import cn.abelib.blog.domain.Blog;
+import cn.abelib.blog.domain.Comment;
 import cn.abelib.blog.domain.User;
 import cn.abelib.blog.repository.BlogRepository;
 import cn.abelib.blog.service.BlogService;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by abel on 2018/1/11.
+ * Created by abel on 2017/11/11.
  */
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -63,5 +64,21 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogRepository.findOne(id);
         blog.setReadSize(blog.getReadSize() + 1);
         blogRepository.save(blog);
+    }
+
+    @Override
+    public Blog createComment(Long blogId, String commentContent) {
+        Blog originalBlog = blogRepository.findOne(blogId);
+        User user = originalBlog.getUser();
+        Comment comment = new Comment(user, commentContent);
+        originalBlog.addComment(comment);
+        return this.saveBlog(originalBlog);
+    }
+
+    @Override
+    public void removeComment(Long blogId, Long commentId) {
+        Blog originalBlog = blogRepository.findOne(blogId);
+        originalBlog.removeComment(commentId);
+        this.saveBlog(originalBlog);
     }
 }

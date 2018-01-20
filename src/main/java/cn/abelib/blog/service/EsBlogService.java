@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Created by abel on 2018/1/17.
+ * Created by abel on 2017/11/17.
  */
 public interface EsBlogService {
 

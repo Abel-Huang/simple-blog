@@ -1,7 +1,7 @@
 package cn.abelib.blog.util.http;
 
 /**
- * Created by abel on 2018/1/7.
+ * Created by abel on 2017/11/7.
  * API响应类, 响应的API都以这种格式返回
  */
 public class Response {

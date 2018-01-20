@@ -11,11 +11,13 @@ import java.io.Serializable;
 
 
 /**
- * Created by abel on 2018/1/3.
+ * Created by abel on  2017/11/4.
+ * User 实体类  用户
  */
 @Entity
 public class User implements Serializable{
-    private static final long serialVersionUID = -1705077149342707141L;
+    private static final long serialVersionUID = 1968059065743692868L;
+
     // 设置id为自增主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

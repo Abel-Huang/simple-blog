@@ -13,7 +13,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by abel on 2018/1/17.
+ * Created by abel on 2017/11/17.
  */
 @Service
 public class EsBlogServiceImpl implements EsBlogService{

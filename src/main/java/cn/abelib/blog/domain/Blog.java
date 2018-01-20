@@ -9,15 +9,16 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
- * Created by abel on 2017/12/28.
- * es的文档类
+ * Created by abel on 2017/10/28.
+ * Blog的实体类  博客
  */
 @Entity
 @Document(indexName = "blog", type = "blog")
 public class Blog implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -859673131481817067L;
 
     // 主键, 作为文档的id
     @Id
@@ -63,6 +64,11 @@ public class Blog implements Serializable{
     // 标签
     @Column(name = "tags", length = 100)
     private String tags;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "comment", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "comment_id", referencedColumnName = "id"))
+    private List<Comment> comments;
 
     protected Blog(){ // JPA要求
 
@@ -157,6 +163,38 @@ public class Blog implements Serializable{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+        this.commentSize = this.comments.size();
+    }
+
+    /**
+     *  添加评论
+     * @param comment
+     */
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+        this.commentSize = this.comments.size();
+    }
+
+    /**
+     *  删除评论
+     * @param commentId
+     */
+    public void removeComment(Long commentId){
+        for (Comment comment : comments ){
+            if (comment.getId() == commentId){
+                comments.remove(comment);
+                this.commentSize = this.comments.size();
+                break;
+            }
+        }
     }
 
     @Override

@@ -10,13 +10,14 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * Created by abel on 2018/1/17.
- * es的文档类
+ * Created by abel on 2017/11/17.
+ * Blog的es 文档类
  */
 @Document(indexName = "blog", type = "blog")
 @XmlRootElement
 public class EsBlog implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6039028223505726877L;
+
     @Id
     private String id;
 

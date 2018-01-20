@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * 文件
- * Created by abel on 2018/1/7.
+ * Created by abel on 2017/11/7.
  */
 public interface FileRepository extends MongoRepository<File, String>{
 

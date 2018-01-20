@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Created by abel on 2018/1/17.
+ * Created by abel on 2017/11/17.
  * Blog的es的资源库接口
  */
 public interface EsBlogRepository extends ElasticsearchRepository<EsBlog, String>{

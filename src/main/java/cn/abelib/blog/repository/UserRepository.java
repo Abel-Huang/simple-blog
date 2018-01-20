@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 /**
- * Created by abel on 2018/1/4.
+ * Created by abel on 2017/11/4.
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 

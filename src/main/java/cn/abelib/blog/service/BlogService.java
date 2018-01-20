@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Created by abel on 2018/1/11.
+ * Created by abel on 2017/11/11.
  */
 public interface BlogService {
     /**
@@ -59,4 +59,18 @@ public interface BlogService {
      */
     void readingIncrease(Long id);
 
+    /**
+     *  创建评论
+     * @param blogId
+     * @param commentContent
+     * @return
+     */
+    Blog createComment(Long blogId, String commentContent);
+
+    /**
+     *  删除评论
+     * @param blogId
+     * @param commentId
+     */
+    void removeComment(Long blogId, Long commentId);
 }
