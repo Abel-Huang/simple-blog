@@ -1,8 +1,6 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.Blog;
-import cn.abelib.blog.domain.Comment;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.domain.*;
 import cn.abelib.blog.repository.BlogRepository;
 import cn.abelib.blog.service.BlogService;
 import cn.abelib.blog.service.EsBlogService;
@@ -80,5 +78,29 @@ public class BlogServiceImpl implements BlogService {
         Blog originalBlog = blogRepository.findOne(blogId);
         originalBlog.removeComment(commentId);
         this.saveBlog(originalBlog);
+    }
+
+    @Override
+    public Blog createVote(Long blogId) {
+        Blog originalBlog = blogRepository.findOne(blogId);
+        User user = originalBlog.getUser();
+        Vote vote = new Vote(user);
+        boolean isExist = originalBlog.addVote(vote);
+        if (isExist){
+            throw new IllegalArgumentException("已经点赞过了");
+        }
+        return this.saveBlog(originalBlog);
+    }
+
+    @Override
+    public void removeVote(Long blogId, Long voteId) {
+        Blog originalBlog = blogRepository.findOne(blogId);
+        originalBlog.removeVote(voteId);
+        this.saveBlog(originalBlog);
+    }
+
+    @Override
+    public Page<Blog> listBlogByCategory(Category category, Pageable pageable) {
+        return blogRepository.findByCategory(category, pageable);
     }
 }

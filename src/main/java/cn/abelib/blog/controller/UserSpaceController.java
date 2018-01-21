@@ -1,25 +1,23 @@
 package cn.abelib.blog.controller;
 
 import cn.abelib.blog.domain.Blog;
+import cn.abelib.blog.domain.Category;
 import cn.abelib.blog.domain.User;
 import cn.abelib.blog.service.BlogService;
+import cn.abelib.blog.service.CategoryService;
 import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.util.http.HttpConstant;
 import cn.abelib.blog.util.http.Meta;
 import cn.abelib.blog.util.http.Response;
 import cn.abelib.blog.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,6 +31,8 @@ public class UserSpaceController {
     private UserService userService;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/{userName}")
     public Response profile(@PathVariable("userName") String username){
@@ -66,13 +66,13 @@ public class UserSpaceController {
         oldUser.setName(user.getName());
 
         // 判断用户密码是否做了变更
-        String rawPassword = oldUser.getPassword();
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodePassword = encoder.encode(user.getPassword());
-        boolean isMatch = encoder.matches(rawPassword, encodePassword);
-        if (!isMatch){
-//            oldUser.set
-        }
+//        String rawPassword = oldUser.getPassword();
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        String encodePassword = encoder.encode(user.getPassword());
+//        boolean isMatch = encoder.matches(rawPassword, encodePassword);
+//        if (!isMatch){
+////            oldUser.set
+//        }
         userService.addUser(oldUser);
         meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
         response = new Response(meta);
@@ -104,7 +104,7 @@ public class UserSpaceController {
      *  获取用户的所有博客列表, 注意这里是不会显示出博客的具体内容
      * @param username
      * @param order
-     * @param category
+     * @param categoryId
      * @param keyword
      * @param pageIndex
      * @param pageSize
@@ -113,7 +113,7 @@ public class UserSpaceController {
     @GetMapping("/{username}/blogs")
     public Response listBlogs(@PathVariable("username")String username,
                               @RequestParam(value = "order", required = false, defaultValue = "new")String order,
-                              @RequestParam(value = "category", required = false)Long category,
+                              @RequestParam(value = "category", required = false)Long categoryId,
                               @RequestParam(value = "keyword", required = false, defaultValue = "")String keyword,
                               @RequestParam(value = "pageIndex", required = false, defaultValue = "0")int pageIndex,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "10")int pageSize){
@@ -122,13 +122,20 @@ public class UserSpaceController {
         User user = userService.getUserByUsername(username);
 
         Page<Blog> page = null;
-        if (order.equals("hot")){
+
+        if (categoryId != null && categoryId > 0){
+            Category category = categoryService.getCategoryById(categoryId);
+            Pageable pageable = new PageRequest(pageIndex, pageSize);
+            page = blogService.listBlogByCategory(category, pageable);
+            order = "";
+        }
+        else if (order.equals("hot")){
             Sort sort = new Sort(Sort.Direction.DESC, "readSize", "commentSize", "voteSize");
             Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
             page = blogService.listBlogByTitleLikeAndSort(user, keyword, pageable);
 
         }
-        if (order.equals("new")){
+        else if (order.equals("new")){
             Pageable pageable = new PageRequest(pageIndex, pageSize);
             page = blogService.listBlogByTitleLikeAndSort(user, keyword, pageable);
         }
@@ -150,7 +157,7 @@ public class UserSpaceController {
      * @return
      */
     @GetMapping("/{username}/blogs/{id}")
-    public Response getBlogsById(@PathVariable("id")Long id){
+    public Response getBlogById(@PathVariable("id")Long id){
         Meta meta;
         Response response;
         try{
@@ -195,10 +202,22 @@ public class UserSpaceController {
     public Response saveBlog(@PathVariable("username")String username, @RequestBody Blog blog){
         Meta meta;
         Response response;
-        User user = userService.getUserByUsername(username);
-        blog.setUser(user);
+
         try {
-            blogService.saveBlog(blog);
+            // 判断对于Blog的操作是修改还是新增
+            if (blog.getId() != null){
+                Blog originalBlog = blogService.getBlogById(blog.getId());
+                originalBlog.setTitle(blog.getTitle());
+                originalBlog.setContent(blog.getContent());
+                originalBlog.setSummary(blog.getSummary());
+                originalBlog.setCategory(blog.getCategory());
+                originalBlog.setTags(originalBlog.getTags());
+                blogService.saveBlog(originalBlog);
+            }else {
+                User user = userService.getUserByUsername(username);
+                blog.setUser(user);
+                blogService.saveBlog(blog);
+            }
             meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
             response = new Response(meta);
         } catch (ConstraintViolationException ex){

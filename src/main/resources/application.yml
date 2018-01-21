@@ -37,12 +37,12 @@ spring:
         mongodb:
             uri: mongodb://localhost:27017/blog
     # elasticsearch 数据源
-        elasticsearch:
-            cluster-nodes: localhost:9300
-            properties:
-                transport:
-                    tcp:
-                        connection_timeout=120s
+#        elasticsearch:
+#            cluster-nodes: localhost:9200
+#            properties:
+#                transport:
+#                    tcp:
+#                        connection_timeout=120s
 
 file:
     server:

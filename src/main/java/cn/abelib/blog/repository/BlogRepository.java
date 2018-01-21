@@ -1,6 +1,7 @@
 package cn.abelib.blog.repository;
 
 import cn.abelib.blog.domain.Blog;
+import cn.abelib.blog.domain.Category;
 import cn.abelib.blog.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,4 +30,12 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
      * @return
      */
     Page<Blog> findByUserAndTitleLikeOrderByCreateTimeDesc(User user, String title,  Pageable pageable);
+
+    /**
+     *  根据博客分类查询
+     * @param category
+     * @param pageable
+     * @return
+     */
+    Page<Blog> findByCategory(Category category, Pageable pageable);
 }

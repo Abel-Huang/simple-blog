@@ -1,4 +1,4 @@
-package cn.abelib.blog.controller;
+package cn.abelib.blog.util;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

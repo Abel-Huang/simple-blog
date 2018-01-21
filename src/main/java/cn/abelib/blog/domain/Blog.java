@@ -2,7 +2,6 @@ package cn.abelib.blog.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -65,10 +64,19 @@ public class Blog implements Serializable{
     @Column(name = "tags", length = 100)
     private String tags;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "comment", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "comment_id", referencedColumnName = "id"))
     private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "vote", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "vote_id", referencedColumnName = "id"))
+    private List<Vote> votes;
+
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     protected Blog(){ // JPA要求
 
@@ -174,6 +182,22 @@ public class Blog implements Serializable{
         this.commentSize = this.comments.size();
     }
 
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     /**
      *  添加评论
      * @param comment
@@ -191,10 +215,43 @@ public class Blog implements Serializable{
         for (Comment comment : comments ){
             if (comment.getId() == commentId){
                 comments.remove(comment);
-                this.commentSize = this.comments.size();
                 break;
             }
         }
+        this.commentSize = this.comments.size();
+    }
+
+    /**
+     *  添加点赞
+     * @param vote
+     */
+    public boolean addVote(Vote vote){
+        boolean isExist = false;
+        for (Vote vote1 : this.getVotes()){
+            if (vote1.getUser().getId() == vote.getUser().getId()){
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist){
+            this.votes.add(vote);
+            this.voteSize = this.votes.size();
+        }
+        return isExist;
+    }
+
+    /**
+     *  取消点赞
+     * @param voteId
+     */
+    public void removeVote(Long voteId){
+        for (Vote vote : votes ){
+            if (vote.getId() == voteId){
+                votes.remove(voteId);
+                break;
+            }
+        }
+        this.voteSize = this.votes.size();
     }
 
     @Override

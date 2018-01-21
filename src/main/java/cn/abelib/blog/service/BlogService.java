@@ -1,6 +1,7 @@
 package cn.abelib.blog.service;
 
 import cn.abelib.blog.domain.Blog;
+import cn.abelib.blog.domain.Category;
 import cn.abelib.blog.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,4 +74,26 @@ public interface BlogService {
      * @param commentId
      */
     void removeComment(Long blogId, Long commentId);
+
+    /**
+     *  创建点赞
+     * @param blogId
+     * @return
+     */
+    Blog createVote(Long blogId);
+
+    /**
+     *  取消点赞
+     * @param blogId
+     * @param voteId
+     */
+    void removeVote(Long blogId, Long voteId);
+
+    /**
+     *  通过分类进行查找
+     * @param category
+     * @param pageable
+     * @return
+     */
+    Page<Blog> listBlogByCategory(Category category, Pageable pageable);
 }

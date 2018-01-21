@@ -1,14 +1,11 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.domain.Blog;
-import cn.abelib.blog.domain.Comment;
-import cn.abelib.blog.service.BlogService;
-import cn.abelib.blog.service.CommentService;
+import cn.abelib.blog.domain.Category;
+import cn.abelib.blog.domain.User;
+import cn.abelib.blog.service.CategoryService;
+import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.util.ConstraintViolationExceptionHandler;
-import cn.abelib.blog.util.http.HttpConstant;
-import cn.abelib.blog.util.http.Meta;
-import cn.abelib.blog.util.http.Response;
-import cn.abelib.blog.util.http.ResponseUtil;
+import cn.abelib.blog.util.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,41 +13,40 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
- * Created by abel on 2017/11/21.
+ * Created by abel on 2017/11/24.
  */
 @RestController
-@RequestMapping("/comments")
-public class CommentController {
+@RequestMapping("/categorys")
+public class CategoryController {
     @Autowired
-    private BlogService blogService;
+    private CategoryService categoryService;
     @Autowired
-    private CommentService commentService;
+    private UserService userService;
 
     /**
-     * 获取Blog的评论列表
-     * @param blogId
+     *  获取分类列表
      * @return
      */
     @GetMapping
-    public Response listComments(@RequestParam(value = "blogId", required = true)Long blogId){
-        Blog blog = blogService.getBlogById(blogId);
-        List<Comment>  comments = blog.getComments();
+    public Response listCategories(@RequestParam(value = "username")String username){
+        User user = userService.getUserByUsername(username);
+        List<Category> categories = categoryService.listCategorys(user);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(comments, meta);
+        return ResponseUtil.validator(categories, meta);
     }
 
-    /**
-     *  发表评论
-     * @param blogId
-     * @param commentContent
-     * @return
-     */
-    @GetMapping("/add")
-    public Response createComment(Long blogId, String commentContent){
+    @PostMapping("/add")
+    public Response createCategory(@RequestBody CategoryVO categoryVO){
+        String username = categoryVO.getUsername();
+        Category category = categoryVO.getCategory();
+
+        User user = userService.getUserByUsername(username);
+
         Response response;
         Meta meta;
         try {
-            blogService.createComment(blogId, commentContent);
+            category.setUser(user);
+            categoryService.addCategory(category);
             meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
             response = new Response(meta);
         }catch (ConstraintViolationException e){
@@ -64,18 +60,16 @@ public class CommentController {
     }
 
     /**
-     *  删除评论
+     *  删除分类
      * @param id
-     * @param blogId
      * @return
      */
     @DeleteMapping("/{id}")
-    public Response removeComment(@PathVariable("id") Long id, Long blogId){
+    public Response delete(@PathVariable("id") Long id){
         Response response;
         Meta meta;
         try {
-            blogService.removeComment(blogId, id);
-            commentService.removeCommentById(id);
+           categoryService.removeCategory(id);
             meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
             response = new Response(meta);
         }catch (Exception e){
@@ -83,5 +77,17 @@ public class CommentController {
             response = new Response(meta);
         }
         return response;
+    }
+
+    /**
+     *  通过id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Response getCategoryById(@PathVariable("id") Long id){
+        Category category = categoryService.getCategoryById(id);
+        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
+        return ResponseUtil.validator(category, meta);
     }
 }
