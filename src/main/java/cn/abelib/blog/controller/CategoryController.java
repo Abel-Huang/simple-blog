@@ -1,7 +1,7 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 import cn.abelib.blog.service.CategoryService;
 import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.util.ConstraintViolationExceptionHandler;
@@ -30,7 +30,7 @@ public class CategoryController {
     @GetMapping
     public Response listCategories(@RequestParam(value = "username")String username){
         User user = userService.getUserByUsername(username);
-        List<Category> categories = categoryService.listCategorys(user);
+        List<Category> categories = categoryService.listCategories(user);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
         return ResponseUtil.validator(categories, meta);
     }

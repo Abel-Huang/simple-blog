@@ -1,7 +1,7 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 import cn.abelib.blog.repository.CategoryRepository;
 import cn.abelib.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> listCategorys(User user) {
+    public List<Category> listCategories(User user) {
         return categoryRepository.findByUser(user);
     }
 }

@@ -1,4 +1,4 @@
-package cn.abelib.blog.domain;
+package cn.abelib.blog.bean;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,7 +23,7 @@ public class Category implements Serializable{
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -58,5 +58,10 @@ public class Category implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Category[id=%d, name='%s', user_id='%s']", id, name, user.getId());
     }
 }

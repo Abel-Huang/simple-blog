@@ -1,7 +1,7 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 
 import java.util.List;
 
@@ -34,5 +34,5 @@ public interface CategoryService {
      * @param user
      * @return
      */
-    List<Category> listCategorys(User user);
+    List<Category> listCategories(User user);
 }

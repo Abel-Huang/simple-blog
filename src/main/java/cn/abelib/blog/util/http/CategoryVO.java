@@ -1,6 +1,6 @@
 package cn.abelib.blog.util.http;
 
-import cn.abelib.blog.domain.Category;
+import cn.abelib.blog.bean.Category;
 
 import java.io.Serializable;
 

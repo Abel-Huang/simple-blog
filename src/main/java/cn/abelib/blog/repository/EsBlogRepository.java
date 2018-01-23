@@ -1,6 +1,6 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.domain.EsBlog;
+import cn.abelib.blog.bean.EsBlog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

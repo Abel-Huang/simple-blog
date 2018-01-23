@@ -3,7 +3,7 @@ package cn.abelib.blog.controller;
 import cn.abelib.blog.util.http.HttpConstant;
 import cn.abelib.blog.util.http.Meta;
 import cn.abelib.blog.util.http.Response;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.User;
 import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;

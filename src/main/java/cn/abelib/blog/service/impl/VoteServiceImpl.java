@@ -1,6 +1,6 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.Vote;
+import cn.abelib.blog.bean.Vote;
 import cn.abelib.blog.repository.VoteRepository;
 import cn.abelib.blog.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;

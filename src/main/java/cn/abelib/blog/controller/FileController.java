@@ -1,6 +1,6 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.domain.File;
+import cn.abelib.blog.bean.File;
 import cn.abelib.blog.service.FileService;
 import cn.abelib.blog.util.MD5Util;
 import cn.abelib.blog.util.http.HttpConstant;

@@ -1,6 +1,6 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.domain.Comment;
+import cn.abelib.blog.bean.Comment;
 
 /**
  * Created by abel on 2017/11/21.

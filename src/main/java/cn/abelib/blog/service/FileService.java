@@ -1,7 +1,7 @@
 package cn.abelib.blog.service;
 
 
-import cn.abelib.blog.domain.File;
+import cn.abelib.blog.bean.File;
 
 import java.util.List;
 
@@ -32,8 +32,8 @@ public interface FileService {
 
     /**
      *  分页查询
-     * @param pageIndex
-     * @param pageSize
+     * @param pageIndex 当前页数， 默认是从第0页开始
+     * @param pageSize 每页的具体条数
      * @return
      */
     List<File> listFileByPage(int pageIndex, int pageSize);

@@ -1,6 +1,6 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.User;
 import cn.abelib.blog.repository.UserRepository;
 import cn.abelib.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

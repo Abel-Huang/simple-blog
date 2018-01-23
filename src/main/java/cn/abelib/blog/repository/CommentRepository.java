@@ -1,6 +1,6 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.domain.Comment;
+import cn.abelib.blog.bean.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

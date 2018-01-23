@@ -1,4 +1,4 @@
-package cn.abelib.blog.domain;
+package cn.abelib.blog.bean;
 
 
 
@@ -53,8 +53,7 @@ public class User implements Serializable{
 
     }
 
-    public User(Long id, String name, String email, String username, String password, String avatar){
-        this.id = id;
+    public User(String name, String email, String username, String password, String avatar){
         this.name = name;
         this.email = email;
         this.username = username;

@@ -1,4 +1,4 @@
-package cn.abelib.blog.domain;
+package cn.abelib.blog.bean;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -60,10 +60,11 @@ public class EsBlog implements Serializable {
         this.content = content;
     }
 
-    public EsBlog(String title, String summary, String content){
+    public EsBlog(String title, String summary, String content, String  tags){
         this.title = title;
         this.summary = summary;
         this.content = content;
+        this.tags = tags;
     }
 
     public EsBlog(Long blogId, String title, String summary, String content, String username, String avatar, Timestamp createTime, Integer readSize, Integer commentSize, Integer voteSize, String tags) {

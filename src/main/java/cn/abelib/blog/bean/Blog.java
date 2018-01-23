@@ -1,4 +1,4 @@
-package cn.abelib.blog.domain;
+package cn.abelib.blog.bean;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;

@@ -1,6 +1,6 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.domain.Vote;
+import cn.abelib.blog.bean.Vote;
 
 /**
  * Created by abel on 2017/11/21.

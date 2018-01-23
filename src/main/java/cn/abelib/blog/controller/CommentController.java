@@ -1,7 +1,7 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.domain.Blog;
-import cn.abelib.blog.domain.Comment;
+import cn.abelib.blog.bean.Blog;
+import cn.abelib.blog.bean.Comment;
 import cn.abelib.blog.service.BlogService;
 import cn.abelib.blog.service.CommentService;
 import cn.abelib.blog.util.ConstraintViolationExceptionHandler;

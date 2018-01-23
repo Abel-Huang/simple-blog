@@ -1,6 +1,6 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.*;
+import cn.abelib.blog.bean.*;
 import cn.abelib.blog.repository.BlogRepository;
 import cn.abelib.blog.service.BlogService;
 import cn.abelib.blog.service.EsBlogService;

@@ -1,7 +1,7 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

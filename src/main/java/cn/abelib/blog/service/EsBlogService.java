@@ -1,7 +1,6 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.domain.EsBlog;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.EsBlog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

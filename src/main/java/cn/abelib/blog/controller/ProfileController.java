@@ -1,8 +1,8 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.domain.Blog;
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Blog;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 import cn.abelib.blog.service.BlogService;
 import cn.abelib.blog.service.CategoryService;
 import cn.abelib.blog.service.UserService;
@@ -25,8 +25,8 @@ import java.util.List;
  * 用户主页控制器
  */
 @RestController
-@RequestMapping("/u")
-public class UserSpaceController {
+@RequestMapping("/profile")
+public class ProfileController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -34,17 +34,12 @@ public class UserSpaceController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/{userName}")
-    public Response profile(@PathVariable("userName") String username){
-        return null;
-    }
-
     /**
      *  获取用户个人设置
      * @param username
      * @return
      */
-    @GetMapping("/{username}/profile")
+    @GetMapping("/{username}")
     public Response getProfile(@PathVariable("username")String username){
         User user = userService.getUserByUsername(username);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
@@ -57,7 +52,7 @@ public class UserSpaceController {
      * @param user
      * @return
      */
-    @PostMapping("/{username}/profile")
+    @PostMapping("/{username}/save")
     public Response saveProfile(@PathVariable("username")String username, User user){
         Meta meta;
         Response response;

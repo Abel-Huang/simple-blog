@@ -1,6 +1,6 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.domain.Comment;
+import cn.abelib.blog.bean.Comment;
 import cn.abelib.blog.repository.CommentRepository;
 import cn.abelib.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;

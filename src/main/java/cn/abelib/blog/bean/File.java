@@ -1,4 +1,4 @@
-package cn.abelib.blog.domain;
+package cn.abelib.blog.bean;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

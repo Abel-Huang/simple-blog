@@ -1,11 +1,10 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.domain.Blog;
-import cn.abelib.blog.domain.Category;
-import cn.abelib.blog.domain.User;
+import cn.abelib.blog.bean.Blog;
+import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.bean.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

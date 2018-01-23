@@ -1,6 +1,6 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.domain.Vote;
+import cn.abelib.blog.bean.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
