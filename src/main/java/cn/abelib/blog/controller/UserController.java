@@ -7,7 +7,11 @@ import cn.abelib.blog.bean.User;
 import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     *  查询用户信息，可以分页，也可以使用name进行模糊查询
+     * @param pageIndex
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/query")
+    public Response listAndPage(@RequestParam(value = "index", required = false, defaultValue = "0")int pageIndex,
+                                @RequestParam(value = "size", required = false, defaultValue = "10")int pageSize,
+                                @RequestParam(value = "name", required = false, defaultValue = "")String name
+                                ){
+        Pageable pageable = new PageRequest(pageIndex, pageSize);
+        Page<User> userPage = userService.listUsersByNameLike(name, pageable);
+        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
+        return ResponseUtil.validator(userPage.getContent(), meta);
+    }
     /**
      * 通过id找到User
      * @param id
@@ -41,9 +62,7 @@ public class UserController {
     @GetMapping("/list")
     public Response listAll(){
         List<User> users = new ArrayList<>();
-        for (User user : userService.getUsersList()){
-            users.add(user);
-        }
+        users.addAll(userService.getUsersList());
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
         return ResponseUtil.validator(users, meta);
     }
@@ -71,18 +90,5 @@ public class UserController {
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
         Response response = new Response(meta);
         return response;
-    }
-
-    /**
-     *  修改用户信息API
-     *  会返回当前查询id的用户信息
-     * @param id
-     * @return
-     */
-    @GetMapping("edit/{id}")
-    public Response update(@PathVariable("id") Long id){
-        User user = userService.getUserById(id);
-        Meta meta = new Meta(200, "success");
-        return ResponseUtil.validator(user, meta);
     }
 }

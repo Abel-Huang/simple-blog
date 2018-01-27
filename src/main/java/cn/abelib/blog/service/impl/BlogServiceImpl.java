@@ -20,6 +20,13 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private EsBlogService esBlogService;
 
+
+    /**
+     *  需要同时将数据存储到MySQL和ES中，修改中也需要同时对两者进行修改,
+     *  后续会考虑从MySQL中直接迁移数据到ES
+     * @param blog
+     * @return
+     */
     @Transactional
     @Override
     public Blog saveBlog(Blog blog) {

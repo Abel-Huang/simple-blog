@@ -32,7 +32,7 @@ public class CommentController {
      * @return
      */
     @GetMapping
-    public Response listComments(@RequestParam(value = "blogId", required = true)Long blogId){
+    public Response listComments(@RequestParam(value = "blogId")Long blogId){
         Blog blog = blogService.getBlogById(blogId);
         List<Comment>  comments = blog.getComments();
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);

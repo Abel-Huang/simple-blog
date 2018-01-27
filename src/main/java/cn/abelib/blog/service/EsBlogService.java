@@ -1,11 +1,16 @@
 package cn.abelib.blog.service;
 
 import cn.abelib.blog.bean.EsBlog;
+import cn.abelib.blog.bean.User;
+import cn.abelib.blog.util.http.TagVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by abel on 2017/11/17.
+ * EsBlog的服务接口
  */
 public interface EsBlogService {
 
@@ -35,7 +40,7 @@ public interface EsBlogService {
      * @param pageable
      * @return
      */
-    Page<EsBlog> listNewestBlogs(String keyword, Pageable pageable);
+    List<EsBlog> listNewestBlogs(String keyword, Pageable pageable);
 
     /**
      *  获取最热的博客列表
@@ -43,26 +48,40 @@ public interface EsBlogService {
      * @param pageable
      * @return
      */
-    Page<EsBlog> listHotestBlogs(String keyword, Pageable pageable);
+    List<EsBlog> listHotestBlogs(String keyword, Pageable pageable);
 
     /**
      *  获取最新的前N位博客列表
      * @param N
      * @return
      */
-    Page<EsBlog> listTopNewestBlogs(Integer N);
+    List<EsBlog> listTopNewestBlogs(Integer N);
 
     /**
      *  获取最热的前N位博客列表
      * @param N
      * @return
      */
-    Page<EsBlog> listTopHotestBlogs(Integer N);
+    List<EsBlog> listTopHotestBlogs(Integer N);
+
+    /**
+     *  获取最热的前N标签
+     * @param N
+     * @return
+     */
+    List<TagVO> listTopTags(Integer N);
+
+    /**
+     *  获取最热的前N用户
+     * @param N
+     * @return
+     */
+    List<User> listTopUsers(Integer N);
 
     /**
      *  获取博客列表
      * @param pageable
      * @return
      */
-    Page<EsBlog> listEsBlogs(Pageable pageable);
+    List<EsBlog> listEsBlogs(Pageable pageable);
 }

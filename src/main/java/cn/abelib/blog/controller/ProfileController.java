@@ -25,7 +25,7 @@ import java.util.List;
  * 用户主页控制器
  */
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/profiles")
 public class ProfileController {
     @Autowired
     private UserService userService;
@@ -48,15 +48,14 @@ public class ProfileController {
 
     /**
      *  保存个人设置
-     * @param username
      * @param user
      * @return
      */
     @PostMapping("/{username}/save")
-    public Response saveProfile(@PathVariable("username")String username, User user){
+    public Response saveProfile(User user){
         Meta meta;
         Response response;
-        User oldUser = userService.getUserByUsername(username);
+        User oldUser = userService.getUserByUsername(user.getUsername());
         oldUser.setEmail(user.getEmail());
         oldUser.setName(user.getName());
 
@@ -76,12 +75,11 @@ public class ProfileController {
 
     /**
      * 保存用户头像
-     * @param username
      * @param user
      * @return
      */
     @PostMapping("/{username}/avatar")
-    public Response saveAvatar(@PathVariable("username")String username, @RequestBody User user){
+    public Response saveAvatar(@RequestBody User user){
         Meta meta;
         Response response;
         String avatarUrl = user.getAvatar();

@@ -41,23 +41,23 @@ public class Blog implements Serializable{
     private String content;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "use_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
+    @Column(name = "create_time", nullable = false)
     @CreationTimestamp
     private Timestamp createTime;
 
     // 阅读量
-    @Column(name = "readSize")
+    @Column(name = "read_size")
     private Integer readSize = 0;
 
     // 评论数
-    @Column(name = "commentSize")
+    @Column(name = "comment_size")
     private Integer commentSize = 0;
 
     // 点赞数
-    @Column(name = "voteSize")
+    @Column(name = "vote_size")
     private Integer voteSize = 0;
 
     // 标签

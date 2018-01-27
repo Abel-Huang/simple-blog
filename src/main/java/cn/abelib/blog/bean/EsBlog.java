@@ -95,6 +95,20 @@ public class EsBlog implements Serializable {
         this.tags = blog.getTags();
     }
 
+    public void update(Blog blog){
+        this.blogId = blog.getId();
+        this.title = blog.getTitle();
+        this.summary = blog.getSummary();
+        this.content = blog.getContent();
+        this.username = blog.getSummary();
+        this.avatar = blog.getUser().getAvatar();
+        this.createTime = blog.getCreateTime();
+        this.readSize = blog.getReadSize();
+        this.commentSize = blog.getCommentSize();
+        this.voteSize = blog.getVoteSize();
+        this.tags = blog.getTags();
+    }
+
     public Long getBlogId() {
         return blogId;
     }

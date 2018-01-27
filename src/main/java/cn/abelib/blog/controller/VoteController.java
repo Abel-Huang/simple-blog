@@ -27,8 +27,8 @@ public class VoteController {
      * @param blogId
      * @return
      */
-    @GetMapping("/add")
-    public Response createVote(Long blogId){
+    @PostMapping("/add")
+    public Response createVote(@RequestParam(value = "blogId") Long blogId){
         Response response;
         Meta meta;
         try {

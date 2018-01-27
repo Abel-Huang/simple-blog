@@ -64,4 +64,11 @@ public interface UserService {
      * @return
      */
     User getUserByUsername(String username);
+
+    /**
+     *  通过用户名列表获取用户列表
+     * @param list
+     * @return
+     */
+    List<User> listUsersByUsername(List<String> list);
 }
