@@ -36,7 +36,7 @@ public class User implements Serializable{
 
     @NotEmpty(message = "账号不能为空")
     @Size(max = 20)
-    @Column(nullable = false, length = 20, unique = true)
+    @Column(nullable = false, length = 20, unique = true, name = "username")
     private String username;
 
     @NotEmpty(message = "密码不能为空")

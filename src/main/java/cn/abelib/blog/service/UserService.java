@@ -1,6 +1,7 @@
 package cn.abelib.blog.service;
 
 import cn.abelib.blog.bean.User;
+import cn.abelib.blog.util.exception.RegisterException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -71,4 +72,17 @@ public interface UserService {
      * @return
      */
     List<User> listUsersByUsername(List<String> list);
+
+    /**
+     *  登录
+     * @return
+     */
+    boolean login(String username, String password);
+
+    /**
+     *  注册
+     * @param user
+     * @return
+     */
+    void register(User user) throws RegisterException;
 }

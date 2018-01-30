@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,5 +66,15 @@ public class UserServiceTest {
         String username = "123";
         User user = userService.getUserByUsername(username);
         System.err.println(user.toString());
+    }
+
+    @Test
+    public void listUsersByUsernameTest() {
+        String[] strings = new String[]{"jin123", "123", "11"};
+        List<String> list =  Arrays.asList(strings);
+        List<User> userList = userService.listUsersByUsername(list);
+        for (User user : userList) {
+            System.err.println(user.toString());
+        }
     }
 }

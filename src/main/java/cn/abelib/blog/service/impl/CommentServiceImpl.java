@@ -5,7 +5,7 @@ import cn.abelib.blog.repository.CommentRepository;
 import cn.abelib.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import javax.transaction.Transactional;
 
 /**
  * Created by abel on 2017/11/21.

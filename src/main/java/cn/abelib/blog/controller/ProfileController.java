@@ -59,6 +59,7 @@ public class ProfileController {
         oldUser.setEmail(user.getEmail());
         oldUser.setName(user.getName());
 
+        // todo
         // 判断用户密码是否做了变更
 //        String rawPassword = oldUser.getPassword();
 //        PasswordEncoder encoder = new BCryptPasswordEncoder();

@@ -40,7 +40,7 @@ public class Blog implements Serializable{
     @Column(nullable = false)
     private String content;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

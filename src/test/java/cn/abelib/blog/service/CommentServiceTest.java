@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by abel on 2017/11/23.
+ *  评论的测试类
+ *  测试通过
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

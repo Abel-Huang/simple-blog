@@ -1,5 +1,6 @@
 package cn.abelib.blog.controller;
 
+import cn.abelib.blog.util.exception.RegisterException;
 import cn.abelib.blog.util.http.HttpConstant;
 import cn.abelib.blog.util.http.Meta;
 import cn.abelib.blog.util.http.Response;
@@ -89,6 +90,44 @@ public class UserController {
         userService.removeUser(id);
         Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
         Response response = new Response(meta);
+        return response;
+    }
+
+    /**
+     *  注册接口
+     * @return
+     */
+    @PostMapping("/register")
+    public Response register(@RequestBody User user){
+        Response response;
+        Meta meta;
+        try{
+            userService.register(user);
+            meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
+            response = new Response(meta);
+        }catch (RegisterException e){
+            meta = new Meta(HttpConstant.REQUEST_ERR, e.getMessage());
+            response = new Response(meta);
+        }
+        return response;
+    }
+
+    /**
+     *  登录接口
+     * @return
+     */
+    @PostMapping("/login")
+    public Response login(@RequestBody String username,
+                          @RequestBody String password){
+        Response response;
+        Meta meta;
+        if (userService.login(username, password)){
+            meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
+            response = new Response(meta);
+        }else {
+            meta = new Meta(HttpConstant.REQUEST_ERR, HttpConstant.REQUEST_ERR_STR);
+            response = new Response(meta);
+        }
         return response;
     }
 }

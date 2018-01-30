@@ -3,12 +3,13 @@ package cn.abelib.blog.service.impl;
 import cn.abelib.blog.bean.User;
 import cn.abelib.blog.repository.UserRepository;
 import cn.abelib.blog.service.UserService;
+import cn.abelib.blog.util.exception.RegisterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -67,6 +68,37 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> listUsersByUsername(List<String> list) {
-        return userRepository.listUsersByUsername(list);
+        return userRepository.findByUsernameIn(list);
+    }
+
+    /**
+     *  所有条件均满足才能验证通过
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public boolean login(String username, String password) {
+        User originalUser = userRepository.findByUsername(username);
+        return (username!=null && password != null && !username.equals("")
+                && password.equals("") && username.trim().equals(originalUser.getUsername().trim())
+                && password.trim().equals(originalUser.getPassword().trim()));
+    }
+
+    /**
+     *  确保注册时用户名唯一
+     * @param user
+     * @return
+     */
+    @Transactional
+    @Override
+    public void register(User user) throws RegisterException {
+        String newUsername = user.getUsername();
+        User original = userRepository.findByUsername(newUsername);
+        if (original != null){
+            userRepository.save(user);
+        }else{
+            throw new RegisterException(RegisterException.REGISTER_ERR);
+        }
     }
 }

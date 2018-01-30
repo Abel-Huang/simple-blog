@@ -22,7 +22,9 @@ public class ControllerTest {
 	private MockMvc mockMvc;
 	@Test
 	public void testHello0() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.get("/hello0").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/hello0")
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(equalTo("Hello World!")));
 	}
