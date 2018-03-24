@@ -46,4 +46,4 @@ spring:
 
 file:
     server:
-        url: http://localhost:8080/upload
+        url: result://localhost:8080/upload

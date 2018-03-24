@@ -1,6 +1,6 @@
-package cn.abelib.blog.util.http;
+package cn.abelib.blog.unuse;
 
-import cn.abelib.blog.bean.Category;
+import cn.abelib.blog.pojo.Category;
 
 import java.io.Serializable;
 
@@ -31,5 +31,13 @@ public class CategoryVO implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryVO{" +
+                "username='" + username + '\'' +
+                ", category=" + category +
+                '}';
     }
 }

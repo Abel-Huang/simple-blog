@@ -1,16 +1,15 @@
 package cn.abelib.blog.service.impl;
 
-import cn.abelib.blog.bean.User;
+import cn.abelib.blog.common.constant.StatusConstant;
+import cn.abelib.blog.common.exception.GlobalException;
+import cn.abelib.blog.common.result.Response;
+import cn.abelib.blog.common.util.MD5Util;
+import cn.abelib.blog.pojo.User;
 import cn.abelib.blog.repository.UserRepository;
 import cn.abelib.blog.service.UserService;
-import cn.abelib.blog.util.exception.RegisterException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * Created by abel on 2017/11/7.
@@ -21,84 +20,88 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional
-    @Override
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Transactional
-    @Override
-    public void removeUser(Long id) {
-        userRepository.delete(id);
-    }
-
-    @Transactional
-    @Override
-    public void removeUsers(List<User> userList) {
-        userRepository.delete(userList);
-    }
-
-    @Transactional
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findOne(id);
-    }
-
-    @Override
-    public List<User> getUsersList() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public Page<User> listUsersByNameLike(String name, Pageable pageable) {
-        name = "%" + name + "%";
-        return userRepository.findByNameLike(name, pageable);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public List<User> listUsersByUsername(List<String> list) {
-        return userRepository.findByUsernameIn(list);
-    }
 
     /**
-     *  所有条件均满足才能验证通过
-     * @param username
-     * @param password
+     *  用户登录接口
+     * @param userName
+     * @param userPassword
      * @return
      */
     @Override
-    public boolean login(String username, String password) {
-        User originalUser = userRepository.findByUsername(username);
-        return (username!=null && password != null && !username.equals("")
-                && password.equals("") && username.trim().equals(originalUser.getUsername().trim())
-                && password.trim().equals(originalUser.getPassword().trim()));
+    public Response<User> login(String userName, String userPassword) {
+        Integer resultCount = userRepository.countByUsername(userName);
+        if (resultCount == 0){
+            throw new GlobalException(StatusConstant.ACCOUNT_ALREADY_EXISTS);
+        }
+        //  这里需要进行密码的转换
+        User user = userRepository.findByUsername(userName);
+        String dbPassword = MD5Util.dbPassword(userPassword);
+
+        if (!dbPassword.equals(user.getPassword())){
+            throw new GlobalException(StatusConstant.INSERT_USER_ERROR);
+        }
+        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
+        return Response.success(StatusConstant.GENERAL_SUCCESS, user);
     }
 
     /**
-     *  确保注册时用户名唯一
+     *  注册用户
      * @param user
      * @return
      */
-    @Transactional
     @Override
-    public void register(User user) throws RegisterException {
-        String newUsername = user.getUsername();
-        User original = userRepository.findByUsername(newUsername);
-        if (original != null){
-            userRepository.save(user);
-        }else{
-            throw new RegisterException(RegisterException.REGISTER_ERR);
+    public Response<String> register(User user) {
+        Integer resultCount = userRepository.countByUsername(user.getUsername());
+        if (resultCount > 0){
+            return Response.failed(StatusConstant.ACCOUNT_ALREADY_EXISTS);
         }
+        user.setRole(StatusConstant.Role.ROLE_CUSTOMER);
+        String dbPassword = MD5Util.dbPassword(user.getPassword());
+        user.setPassword(dbPassword);
+        user.setRole(StatusConstant.Role.ROLE_CUSTOMER);
+
+        User saveUser = userRepository.save(user);
+        if (saveUser == null){
+            return Response.failed(StatusConstant.INSERT_USER_ERROR);
+        }
+        return Response.success(StatusConstant.GENERAL_SUCCESS);
+    }
+
+    @Override
+    public Response<String> resetPassword(String originalPass, String newPassword, User user) {
+        int resultCount = userRepository.countUserByIdAndPassword(user.getId(), MD5Util.dbPassword(originalPass));
+        if (resultCount == 0){
+            return Response.failed(StatusConstant.WRONG_PASS_ERROR);
+        }
+        user.setPassword(MD5Util.dbPassword(newPassword));
+
+        User updateUser = userRepository.save(user);
+        if (updateUser == null){
+            return Response.failed(StatusConstant.UPDATE_PASS_ERROR);
+        }
+        return Response.success(StatusConstant.GENERAL_SUCCESS);
+    }
+
+    @Override
+    public Response<User> updateUserInfo(User user) {
+        User updateUser = userRepository.findOne(user.getId());
+        updateUser.setNickname(user.getNickname());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setAvatar(user.getAvatar());
+        updateUser.setRole(user.getRole());
+
+        User saveUser = userRepository.save(user);
+        if (saveUser == null){
+            return Response.failed(StatusConstant.UPDATE_PASS_ERROR);
+        }
+        return Response.success(StatusConstant.GENERAL_SUCCESS);
+    }
+
+    @Override
+    public Response<String> checkAuthorRole(User user) {
+        if (user != null && user.getRole() == StatusConstant.Role.ROLE_AUTHER){
+            return Response.success(StatusConstant.GENERAL_SUCCESS);
+        }
+        return Response.failed(StatusConstant.GENERAL_SERVER_ERROR);
     }
 }

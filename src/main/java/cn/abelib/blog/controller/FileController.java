@@ -1,12 +1,10 @@
 package cn.abelib.blog.controller;
 
-import cn.abelib.blog.bean.File;
+import cn.abelib.blog.pojo.File;
 import cn.abelib.blog.service.FileService;
-import cn.abelib.blog.util.MD5Util;
-import cn.abelib.blog.util.http.HttpConstant;
-import cn.abelib.blog.util.http.Meta;
-import cn.abelib.blog.util.http.Response;
-import cn.abelib.blog.util.http.ResponseUtil;
+import cn.abelib.blog.common.util.MD5Util;
+import cn.abelib.blog.common.constant.StatusConstant;
+import cn.abelib.blog.common.result.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -44,15 +42,13 @@ public class FileController {
     @GetMapping("/")
     public Response getLatest(){
         List<File> fileList = fileService.listFileByPage(0, 20);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(fileList, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/{pageIndex}/{pageSize}")
     public Response getFiles(@PathVariable int pageIndex, @PathVariable int pageSize){
         List<File> fileList = fileService.listFileByPage(pageIndex, pageSize);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(fileList, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/{id}")
@@ -68,11 +64,11 @@ public class FileController {
                     .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream" )
                     .header(HttpHeaders.CONTENT_LENGTH, file.getSize()+"")
                     .header("Connection",  "close")
-                    .body(new Response(new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR), result));
+                    .body( Response.failed(StatusConstant.GENERAL_SUCCESS));
         }else
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(new Response(new Meta(HttpConstant.RESPONSE_EMPTY, HttpConstant.FILE_EMPTY_STR)));
+                    .body(Response.failed(StatusConstant.GENERAL_SUCCESS));
     }
 
     /**
@@ -94,7 +90,7 @@ public class FileController {
         }else
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(new Response(new Meta(HttpConstant.RESPONSE_EMPTY, HttpConstant.FILE_EMPTY_STR)));
+                    .body(Response.failed(StatusConstant.GENERAL_SUCCESS));
     }
 
     /**
@@ -105,20 +101,18 @@ public class FileController {
     @PostMapping("/upload")
     public Response upload(@RequestParam("file")MultipartFile multipartFile){
         File file;
-        Meta meta;
-        Response response;
+        File f;
+
+
         try {
-            File f = new File(multipartFile.getOriginalFilename(), multipartFile.getContentType(), multipartFile.getSize(), multipartFile.getBytes());
+            f = new File(multipartFile.getOriginalFilename(), multipartFile.getContentType(), multipartFile.getSize(), multipartFile.getBytes());
             f.setMd5(MD5Util.getMd5((FileInputStream)multipartFile.getInputStream(), multipartFile.getSize()));
             file = fileService.addFile(f);
             String path = "//" + serverAddress + ":" + serverPort + "/view/" + file.getId();
-            meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-            response = new Response(meta, path);
-        }catch (IOException e){
-            meta = new Meta(HttpConstant.SERVER_ERR, e.getMessage());
-            response = new Response(meta);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return response;
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     /**
@@ -127,16 +121,8 @@ public class FileController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public Response delete(@PathVariable String id){
-        Meta meta;
-        Response response;
-        try{
-            fileService.removeFile(id);
-            meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        }catch (Exception e){
-            meta = new Meta(HttpConstant.SERVER_ERR,e.getMessage());
-        }
-        response = new Response(meta);
-        return response;
+    public Response<String> delete(@PathVariable String id){
+        fileService.removeFile(id);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 }

@@ -1,7 +1,8 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.bean.User;
-import cn.abelib.blog.util.exception.RegisterException;
+import cn.abelib.blog.common.result.Response;
+import cn.abelib.blog.pojo.User;
+import cn.abelib.blog.common.exception.GlobalException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,77 +13,13 @@ import java.util.List;
  * 用户服务接口, 定义了用户的常见操作
  */
 public interface UserService {
-    /**
-     * 保存用户
-     * @param user
-     * @return
-     */
-    User addUser(User user);
+    Response<User> login(String userName, String userPassword);
 
-    /**
-     * 删除用户
-     * @param id
-     */
-    void removeUser(Long  id);
+    Response<String> register(User user);
 
-    /**
-     * 批量删除用户
-     * @param userList
-     */
-    void removeUsers(List<User> userList);
+    Response<String> resetPassword(String originalPass, String newPassword, User user);
 
-    /**
-     * 更新用户
-     * @param user
-     * @return
-     */
-    User updateUser(User user);
+    Response<User> updateUserInfo(User user);
 
-    /**
-     * 查询用户
-     * @param id
-     * @return
-     */
-    User getUserById(Long id);
-
-    /**
-     * 获取用户列表
-     * @return
-     */
-    List<User> getUsersList();
-
-    /**
-     * 根据用户名进行分页模糊查询
-     * @param name
-     * @param pageable
-     * @return
-     */
-    Page<User> listUsersByNameLike(String name, Pageable pageable);
-
-    /**
-     *  通过用户名获取用户
-     * @param username
-     * @return
-     */
-    User getUserByUsername(String username);
-
-    /**
-     *  通过用户名列表获取用户列表
-     * @param list
-     * @return
-     */
-    List<User> listUsersByUsername(List<String> list);
-
-    /**
-     *  登录
-     * @return
-     */
-    boolean login(String username, String password);
-
-    /**
-     *  注册
-     * @param user
-     * @return
-     */
-    void register(User user) throws RegisterException;
+    Response<String> checkAuthorRole(User user);
 }

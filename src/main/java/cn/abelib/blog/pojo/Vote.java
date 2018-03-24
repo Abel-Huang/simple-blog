@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,9 +18,11 @@ public class Vote implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
+
+    private Long blogId;
+
+    private Integer vote;
 
     @Column(nullable = false, name = "createtime")
     @CreationTimestamp
@@ -30,9 +32,27 @@ public class Vote implements Serializable{
 
     }
 
-    public Vote(User user){
-
+    public Vote(Long userId, Long blogId){
+        this.blogId = blogId;
+        this.userId = userId;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Long blogId) {
+        this.blogId = blogId;
+    }
+
 
     public Long getId() {
         return id;
@@ -42,19 +62,19 @@ public class Vote implements Serializable{
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Timestamp getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getVote() {
+        return vote;
+    }
+
+    public void setVote(Integer vote) {
+        this.vote = vote;
     }
 }

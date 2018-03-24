@@ -1,7 +1,7 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.bean.Category;
-import cn.abelib.blog.bean.User;
+import cn.abelib.blog.pojo.Category;
+import cn.abelib.blog.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ public class CategoryServiceTest {
 
     @Test
     public void addCategoryTest(){
-        User user = userService.getUserById(5L);
-        Category category = new Category("ElasticSearch", user);
-        Category saveCategory = categoryService.addCategory(category);
-        System.err.println(saveCategory);
+//        User user = userService.getUserById(5L);
+//        Category category = new Category("ElasticSearch", user);
+//        Category saveCategory = categoryService.addCategory(category);
+//        System.err.println(saveCategory);
     }
 
     @Test
@@ -44,10 +44,10 @@ public class CategoryServiceTest {
 
     @Test
     public void listCategoriesTest(){
-        User user = userService.getUserById(5L);
-        List<Category> categories = categoryService.listCategories(user);
-        for (Category category : categories){
-            System.err.println(category);
-        }
+//        User user = userService.getUserById(5L);
+//        List<Category> categories = categoryService.listCategories(user);
+//        for (Category category : categories){
+//            System.err.println(category);
+//        }
     }
 }

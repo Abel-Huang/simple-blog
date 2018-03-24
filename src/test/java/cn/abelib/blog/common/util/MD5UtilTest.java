@@ -1,4 +1,4 @@
-package cn.abelib.blog.util;
+package cn.abelib.blog.common.util;
 
 
 import org.junit.Test;
@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * Created by abel on 2017/11/10.

@@ -1,7 +1,7 @@
 package cn.abelib.blog.service;
 
 
-import cn.abelib.blog.bean.File;
+import cn.abelib.blog.pojo.File;
 
 import java.util.List;
 

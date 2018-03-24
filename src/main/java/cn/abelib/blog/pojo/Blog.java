@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -40,9 +40,7 @@ public class Blog implements Serializable{
     @Column(nullable = false)
     private String content;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
 
     @Column(name = "create_time", nullable = false)
     @CreationTimestamp
@@ -64,19 +62,7 @@ public class Blog implements Serializable{
     @Column(name = "tags", length = 100)
     private String tags;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "comment", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "comment_id", referencedColumnName = "id"))
-    private List<Comment> comments;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "vote", joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "vote_id", referencedColumnName = "id"))
-    private List<Vote> votes;
-
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private Long categoryId;
 
     protected Blog(){ // JPA要求
 
@@ -93,13 +79,6 @@ public class Blog implements Serializable{
         this.summary = summary;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Timestamp getCreateTime() {
         return createTime;
@@ -141,13 +120,6 @@ public class Blog implements Serializable{
         this.tags = tags;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -173,92 +145,29 @@ public class Blog implements Serializable{
         this.content = content;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-        this.commentSize = this.comments.size();
+    public Long getId() {
+       return id;
     }
 
-    public List<Vote> getVotes() {
-        return votes;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    /**
-     *  添加评论
-     * @param comment
-     */
-    public void addComment(Comment comment){
-        this.comments.add(comment);
-        this.commentSize = this.comments.size();
-    }
-
-    /**
-     *  删除评论
-     * @param commentId
-     */
-    public void removeComment(Long commentId){
-        for (Comment comment : comments ){
-            if (comment.getId() == commentId){
-                comments.remove(comment);
-                break;
-            }
-        }
-        this.commentSize = this.comments.size();
-    }
-
-    /**
-     *  添加点赞
-     * @param vote
-     */
-    public boolean addVote(Vote vote){
-        boolean isExist = false;
-        for (Vote vote1 : this.getVotes()){
-            if (vote1.getUser().getId() == vote.getUser().getId()){
-                isExist = true;
-                break;
-            }
-        }
-        if (!isExist){
-            this.votes.add(vote);
-            this.voteSize = this.votes.size();
-        }
-        return isExist;
-    }
-
-    /**
-     *  取消点赞
-     * @param voteId
-     */
-    public void removeVote(Long voteId){
-        for (Vote vote : votes ){
-            if (vote.getId() == voteId){
-                votes.remove(voteId);
-                break;
-            }
-        }
-        this.voteSize = this.votes.size();
-    }
-
-    @Override
-    public String toString(){
-        return String.format(
-                "Blog[id='%s', title='%s', summary='%s', content='%s']",
-                id, title, summary, content);
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Blog simpleBlog(){

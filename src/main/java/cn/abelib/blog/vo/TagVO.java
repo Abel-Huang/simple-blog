@@ -1,4 +1,4 @@
-package cn.abelib.blog.util.http;
+package cn.abelib.blog.vo;
 
 import java.io.Serializable;
 
@@ -31,5 +31,13 @@ public class TagVO implements Serializable {
     public TagVO(String name, Long count){
         this.name = name;
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "TagVO{" +
+                "name='" + name + '\'' +
+                ", count=" + count +
+                '}';
     }
 }

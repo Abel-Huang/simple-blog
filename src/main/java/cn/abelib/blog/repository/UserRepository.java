@@ -1,6 +1,6 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.bean.User;
+import cn.abelib.blog.pojo.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +13,27 @@ import java.util.List;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    /**
+     *  计算当前UserName是否已经被使用过
+     * @param username
+     * @return
+     */
+    Integer countByUsername(String username);
+
+    /**
+     *  通过用户名检测用户的登录状态
+     * @param username
+     * @return
+     */
+    User findUserByUsername(String username);
+
+    /**
+     *
+     * @param id
+     * @param password
+     * @return
+     */
+    Integer countUserByIdAndPassword(Long id, String password);
     /**
      * 通过name查询(所有类似的)
      * @param name

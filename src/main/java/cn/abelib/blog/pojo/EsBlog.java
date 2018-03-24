@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -35,9 +35,6 @@ public class EsBlog implements Serializable {
     private String username;
 
     @Field(index = FieldIndex.not_analyzed)
-    private String avatar;
-
-    @Field(index = FieldIndex.not_analyzed)
     private Timestamp createTime;
 
     @Field(index = FieldIndex.not_analyzed)
@@ -67,13 +64,12 @@ public class EsBlog implements Serializable {
         this.tags = tags;
     }
 
-    public EsBlog(Long blogId, String title, String summary, String content, String username, String avatar, Timestamp createTime, Integer readSize, Integer commentSize, Integer voteSize, String tags) {
+    public EsBlog(Long blogId, String title, String summary, String content, String username, Timestamp createTime, Integer readSize, Integer commentSize, Integer voteSize, String tags) {
         this.blogId = blogId;
         this.title = title;
         this.summary = summary;
         this.content = content;
         this.username = username;
-        this.avatar = avatar;
         this.createTime = createTime;
         this.readSize = readSize;
         this.commentSize = commentSize;
@@ -87,7 +83,6 @@ public class EsBlog implements Serializable {
         this.summary = blog.getSummary();
         this.content = blog.getContent();
         this.username = blog.getSummary();
-        this.avatar = blog.getUser().getAvatar();
         this.createTime = blog.getCreateTime();
         this.readSize = blog.getReadSize();
         this.commentSize = blog.getCommentSize();
@@ -101,7 +96,6 @@ public class EsBlog implements Serializable {
         this.summary = blog.getSummary();
         this.content = blog.getContent();
         this.username = blog.getSummary();
-        this.avatar = blog.getUser().getAvatar();
         this.createTime = blog.getCreateTime();
         this.readSize = blog.getReadSize();
         this.commentSize = blog.getCommentSize();
@@ -123,14 +117,6 @@ public class EsBlog implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public Timestamp getCreateTime() {

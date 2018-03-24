@@ -1,9 +1,8 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.bean.EsBlog;
-import cn.abelib.blog.bean.User;
-import cn.abelib.blog.util.http.TagVO;
-import org.springframework.data.domain.Page;
+import cn.abelib.blog.pojo.EsBlog;
+import cn.abelib.blog.pojo.User;
+import cn.abelib.blog.vo.TagVO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

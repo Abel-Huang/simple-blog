@@ -1,7 +1,7 @@
 package cn.abelib.blog.service.impl;
 
 
-import cn.abelib.blog.bean.File;
+import cn.abelib.blog.pojo.File;
 import cn.abelib.blog.repository.FileRepository;
 import cn.abelib.blog.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;

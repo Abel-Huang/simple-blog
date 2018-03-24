@@ -1,17 +1,20 @@
 create database blog_data;
 
 use blog_data;
-drop table if exists user;
+
 
 # 用户表
+drop table if exists user;
 create table user(
 id int(11) not null auto_increment,
 name varchar(20) not null,
 email varchar(50) not null,
 username varchar(20) not null,
 password varchar(100) not null,
-avatar varchar(200),
-primary key(id)
+role int(11) not null,
+avatar varchar(200) not null,
+primary key(id),
+unique key user_name_unique (username) using btree
 )engine=innodb default charset = utf8;
 
 # 博客表
@@ -26,9 +29,7 @@ create_time timestamp,
 read_size int(11),
 comment_size int(11),
 vote_size int(11),
-tags varchar(10),
-comment_id int(11),
-vote_id int(11),
+tags varchar(1000),
 category_id int(11),
 primary key(id)
 )engine=innodb default charset = utf8;
@@ -37,9 +38,9 @@ primary key(id)
 drop table if exists comment;
 create table comment(
 id int(11) not null auto_increment,
+blog_id int(11) not null,
+user_id int(11) not null,
 content varchar(500) not null,
-user_id int(11),
-createtime timestamp,
 primary key(id)
 )engine=innodb default charset = utf8;
 
@@ -47,8 +48,8 @@ primary key(id)
 drop table if exists category;
 create table category(
 id int(11) not null auto_increment,
-name varchar(30) not null,
-user_id int(11),
+user_id int(11) not null,
+content varchar(500) not null,
 primary key(id)
 )engine=innodb default charset = utf8;
 
@@ -56,7 +57,7 @@ primary key(id)
 drop table if exists vote;
 create table vote(
 id int(11) not null auto_increment,
-user_id int(11),
-createtime timestamp,
+blog_id int(11) not null,
+user_id int(11) not null,
 primary key(id)
 )engine=innodb default charset = utf8;

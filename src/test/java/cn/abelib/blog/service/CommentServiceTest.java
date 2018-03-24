@@ -1,6 +1,6 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.bean.Comment;
+import cn.abelib.blog.pojo.Comment;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package cn.abelib.blog.service;
 
 
 
-import cn.abelib.blog.bean.EsBlog;
+import cn.abelib.blog.pojo.EsBlog;
 import cn.abelib.blog.repository.EsBlogRepository;
 import org.junit.Before;
 import org.junit.Test;

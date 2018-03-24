@@ -1,21 +1,17 @@
 package cn.abelib.blog.service;
 
-import cn.abelib.blog.bean.Vote;
+import cn.abelib.blog.common.result.Response;
+import cn.abelib.blog.pojo.Vote;
 
 /**
  * Created by abel on 2017/11/21.
  */
 public interface VoteService {
     /**
-     *  根据id查询
-     * @param id
+     *  点赞或取消点赞
+     * @param userId
+     * @param blogId
      * @return
      */
-    Vote getVoteById(Long id);
-
-    /**
-     *  取消点赞
-     * @param id
-     */
-    void removeVote(Long id);
+    Response<Vote> addVote(Long userId, Long blogId);
 }

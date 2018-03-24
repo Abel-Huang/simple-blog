@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 
 
@@ -23,10 +23,10 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "姓名不能为空")
+    @NotEmpty(message = "昵称不能为空")
     @Size(min = 2, max = 20)
     @Column(nullable = false, length = 20)
-    private String name;
+    private String nickname;
 
     @NotEmpty
     @Size(max = 50)
@@ -44,6 +44,8 @@ public class User implements Serializable{
     @Column(length = 100)
     private String password;
 
+    private Integer role;
+
     @Column(length = 200)
     private String avatar;
 
@@ -53,11 +55,12 @@ public class User implements Serializable{
 
     }
 
-    public User(String name, String email, String username, String password, String avatar){
-        this.name = name;
+    public User(String nickname, String email, String username, String password, Integer role, String avatar){
+        this.nickname = nickname;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.role = role;
         this.avatar = avatar;
     }
 
@@ -84,6 +87,7 @@ public class User implements Serializable{
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     public Long getId() {
         return id;
     }
@@ -92,12 +96,12 @@ public class User implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -108,8 +112,24 @@ public class User implements Serializable{
         this.email = email;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return String.format("User[id=%d, name='%s', email='%s', username=%s, password='%s', avatar='%s']", id, name, email, username, password, avatar);
+        return "User{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

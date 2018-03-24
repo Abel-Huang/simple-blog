@@ -1,8 +1,8 @@
 package cn.abelib.blog.repository;
 
-import cn.abelib.blog.bean.Blog;
-import cn.abelib.blog.bean.Category;
-import cn.abelib.blog.bean.User;
+import cn.abelib.blog.pojo.Blog;
+import cn.abelib.blog.pojo.Category;
+import cn.abelib.blog.pojo.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

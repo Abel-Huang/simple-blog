@@ -1,5 +1,8 @@
-package cn.abelib.blog.util;
+package cn.abelib.blog.common.util;
 
+
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,6 +12,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * Created by abel on 2017/12/6.
@@ -16,6 +20,8 @@ import java.security.NoSuchAlgorithmException;
  */
 
 public class MD5Util {
+    private static final String SALT = "12f23g1cry`13gqwcery";
+
     /**
      *  获取文件流 MD5, 似乎第二种方法性能要高上50%
      * @param fis
@@ -60,5 +66,25 @@ public class MD5Util {
             md5.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
         }
         return md5.toString();
+    }
+
+    /**
+     *  计算字符串的md5值
+     * @param src
+     * @return
+     */
+    public static String md5(String src){
+        return DigestUtils.md5Hex(src);
+    }
+
+
+    /**
+     *  由前端密码生成一个数据库密码
+     * @param formPass
+     * @return String
+     */
+    public static String dbPassword(String formPass){
+        String inputPass = formPass + SALT + formPass;
+        return md5(inputPass);
     }
 }

@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -25,11 +25,11 @@ public class Comment implements Serializable {
     @Column(nullable = false)
     private String content;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
 
-    @Column(nullable = false, name = "createtime")
+    private Long blogId;
+
+    @Column(nullable = false, name = "create_time")
     @CreationTimestamp
     private Timestamp createTime;
 
@@ -37,8 +37,9 @@ public class Comment implements Serializable {
 
     }
 
-    public Comment(User user, String content){
-        this.user = user;
+    public Comment(Long userId, Long blogId, String content){
+        this.blogId = blogId;
+        this.userId = userId;
         this.content = content;
     }
     public Long getId() {
@@ -57,19 +58,39 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Timestamp getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Long blogId) {
+        this.blogId = blogId;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", userId=" + userId +
+                ", blogId=" + blogId +
+                ", createTime=" + createTime +
+                '}';
     }
 }

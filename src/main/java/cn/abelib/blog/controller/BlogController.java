@@ -2,10 +2,12 @@ package cn.abelib.blog.controller;
 
 
 
-import cn.abelib.blog.bean.EsBlog;
-import cn.abelib.blog.bean.User;
+import cn.abelib.blog.common.result.Response;
+import cn.abelib.blog.common.constant.StatusConstant;
+import cn.abelib.blog.pojo.EsBlog;
+import cn.abelib.blog.pojo.User;
+import cn.abelib.blog.vo.TagVO;
 import cn.abelib.blog.service.EsBlogService;
-import cn.abelib.blog.util.http.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,13 +33,12 @@ public class BlogController {
 
     @GetMapping("/hotest")
     public Response listHotest(@RequestParam(value = "keyword", required = false, defaultValue = "")String keyword,
-                         @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
-                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
+                               @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
         Sort sort = new Sort(Direction.DESC, "readSize", "commentSize", "voteSize", "createTime");
         Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
         List<EsBlog> esBlogs = esBlogService.listHotestBlogs(keyword, pageable);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(esBlogs, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/newest")
@@ -47,36 +48,31 @@ public class BlogController {
         Sort sort = new Sort(Direction.DESC, "createTime");
         Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
         List<EsBlog> esBlogs = esBlogService.listNewestBlogs(keyword, pageable);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(esBlogs, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/list/users")
     public Response listUsers(@RequestParam(value = "num", required = false, defaultValue = "10")Integer num){
         List<User> list = esBlogService.listTopUsers(num);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(list, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/list/tags")
     public Response listTags(@RequestParam(value = "num", required = false, defaultValue = "10")Integer num){
         List<TagVO> list = esBlogService.listTopTags(num);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(list, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/list/hotest")
     public Response listHotest(@RequestParam(value = "num", required = false, defaultValue = "10")Integer num){
         List<EsBlog> list = esBlogService.listTopHotestBlogs(num);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(list, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
     @GetMapping("/list/newest")
     public Response listNewest(@RequestParam(value = "num", required = false, defaultValue = "10")Integer num){
         List<EsBlog> list = esBlogService.listTopNewestBlogs(num);
-        Meta meta = new Meta(HttpConstant.RESPONSE_OK, HttpConstant.RESPONSE_OK_STR);
-        return ResponseUtil.validator(list, meta);
+        return Response.failed(StatusConstant.GENERAL_SUCCESS);
     }
 
 }

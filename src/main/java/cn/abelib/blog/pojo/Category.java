@@ -1,4 +1,4 @@
-package cn.abelib.blog.bean;
+package cn.abelib.blog.pojo;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,19 +21,17 @@ public class Category implements Serializable{
     @NotEmpty(message = "分类名称字段不能为空")
     @Size(min = 2, max = 30)
     @Column(nullable = false)
-    private String name;
+    private String content;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
 
     protected Category(){
 
     }
 
-    public Category(String name, User user){
-        this.name = name;
-        this.user = user;
+    public Category(String content, Long userId){
+        this.content = content;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -44,24 +42,28 @@ public class Category implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getContent() {
+        return content;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return String.format("Category[id=%d, name='%s', user_id='%s']", id, name, user.getId());
+        return "Category{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }

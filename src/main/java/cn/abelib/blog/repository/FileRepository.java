@@ -1,7 +1,7 @@
 package cn.abelib.blog.repository;
 
 
-import cn.abelib.blog.bean.File;
+import cn.abelib.blog.pojo.File;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
