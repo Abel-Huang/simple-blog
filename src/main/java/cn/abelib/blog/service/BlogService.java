@@ -1,10 +1,16 @@
 package cn.abelib.blog.service;
 
+import cn.abelib.blog.common.result.Response;
 import cn.abelib.blog.pojo.Blog;
 import cn.abelib.blog.pojo.Category;
+import cn.abelib.blog.pojo.EsBlog;
 import cn.abelib.blog.pojo.User;
+import cn.abelib.blog.vo.BlogVo;
+import cn.abelib.blog.vo.SimpleBlogVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Created by abel on 2017/11/11.
@@ -12,88 +18,63 @@ import org.springframework.data.domain.Pageable;
 public interface BlogService {
     /**
      *  保存Blog
-     * @param blog
+     * @param blogVo
+     * @return
      * @return
      */
-    Blog saveBlog(Blog blog);
+    Response<Blog> saveBlog(BlogVo blogVo);
 
     /**
      *  删除Blog
-     * @param id
+     * @param userId
+     * @param blogId
      */
-    void removeBlog(Long id);
+    Response removeBlog(Long userId, Long blogId);
 
     /**
      *  更新Blog
-     * @param blog
+     * @param blogVo
+     * @param blogId
      * @return
      */
-    Blog updateBlog(Blog blog);
+    Response<Blog> updateBlog(BlogVo blogVo, Long blogId);
+
     /**
      *  通过id查询
      * @param id
      * @return
      */
-    Blog getBlogById(Long id);
+    Response<EsBlog> getBlogById(Long id);
 
     /**
-     *
-     * @param user
-     * @param title
+     *  最热的列表
+     * @param keyword
      * @param pageable
      * @return
      */
-    Page<Blog> listBlogByTitleLike(User user, String title, Pageable pageable);
+    Response<List<EsBlog>> listHotestBlogs(String keyword, Pageable pageable);
 
     /**
-     *
-     * @param user
-     * @param title
+     *  最新的列表
+     * @param keyword
      * @param pageable
      * @return
      */
-    Page<Blog> listBlogByTitleLikeAndSort(User user, String title, Pageable pageable);
+    Response<List<EsBlog>> listNewestBlogs(String keyword, Pageable pageable);
 
     /**
-     *  用户阅读量增加
-     * @param id
-     */
-    void readingIncrease(Long id);
-
-    /**
-     *  创建评论
-     * @param blogId
-     * @param commentContent
-     * @return
-     */
-    Blog createComment(Long blogId, String commentContent);
-
-    /**
-     *  删除评论
-     * @param blogId
-     * @param commentId
-     */
-    void removeComment(Long blogId, Long commentId);
-
-    /**
-     *  创建点赞
-     * @param blogId
-     * @return
-     */
-    Blog createVote(Long blogId);
-
-    /**
-     *  取消点赞
-     * @param blogId
-     * @param voteId
-     */
-    void removeVote(Long blogId, Long voteId);
-
-    /**
-     *  通过分类进行查找
-     * @param category
+     *  列出所有用户的博客列表
      * @param pageable
      * @return
      */
-    Page<Blog> listBlogByCategory(Category category, Pageable pageable);
+    Response<List<SimpleBlogVo>> listBlogs(Pageable pageable);
+
+    /**
+     *  列出单个用户的博客列表
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Response<List<SimpleBlogVo>> listBlogsByUserId(Long userId, Pageable pageable);
+
 }

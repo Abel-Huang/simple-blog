@@ -4,7 +4,6 @@ import cn.abelib.blog.pojo.EsBlog;
 import cn.abelib.blog.pojo.User;
 import cn.abelib.blog.repository.EsBlogRepository;
 import cn.abelib.blog.service.EsBlogService;
-import cn.abelib.blog.service.UserService;
 import cn.abelib.blog.vo.TagVO;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -40,8 +39,6 @@ public class EsBlogServiceImpl implements EsBlogService{
     private EsBlogRepository esBlogRepository;
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
-    @Autowired
-    private UserService userService;
 
     @Override
     public void removeEsBlog(String id) {

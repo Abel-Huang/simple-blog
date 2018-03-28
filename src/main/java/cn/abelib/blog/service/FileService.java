@@ -29,12 +29,4 @@ public interface FileService {
      * @return
      */
     File getFileById(String id);
-
-    /**
-     *  分页查询
-     * @param pageIndex 当前页数， 默认是从第0页开始
-     * @param pageSize 每页的具体条数
-     * @return
-     */
-    List<File> listFileByPage(int pageIndex, int pageSize);
 }

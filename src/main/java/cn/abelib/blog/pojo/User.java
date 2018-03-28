@@ -44,10 +44,7 @@ public class User implements Serializable{
     @Column(length = 100)
     private String password;
 
-    private Integer role;
-
-    @Column(length = 200)
-    private String avatar;
+    private Long avatarId;
 
 
     // 无参的构造函数, 防止直接使用
@@ -55,13 +52,12 @@ public class User implements Serializable{
 
     }
 
-    public User(String nickname, String email, String username, String password, Integer role, String avatar){
+    public User(String nickname, String email, String username, String password, Long avatarId){
         this.nickname = nickname;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.role = role;
-        this.avatar = avatar;
+        this.avatarId = avatarId;
     }
 
     public String getPassword() {
@@ -80,12 +76,12 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public Long getAvatarId() {
+        return avatarId;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarId(Long avatarId) {
+        this.avatarId = avatarId;
     }
 
     public Long getId() {
@@ -112,13 +108,6 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
 
     @Override
     public String toString() {
@@ -128,8 +117,7 @@ public class User implements Serializable{
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role +
-                ", avatar='" + avatar + '\'' +
+                ", avatarId='" + avatarId + '\'' +
                 '}';
     }
 }

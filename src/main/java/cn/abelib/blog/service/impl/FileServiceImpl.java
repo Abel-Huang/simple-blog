@@ -38,12 +38,4 @@ public class FileServiceImpl implements FileService{
         return fileRepository.findOne(id);
     }
 
-    @Override
-    public List<File> listFileByPage(int pageIndex, int pageSize) {
-        Page<File> page;
-        Sort sort = new Sort(Sort.Direction.DESC, "uploadDate");
-        Pageable pageable = new PageRequest(pageIndex, pageSize, sort);
-        page = fileRepository.findAll(pageable);
-        return page.getContent();
-    }
 }

@@ -33,6 +33,8 @@ public class StatusConstant {
 
     private static final String COMMENT_NOT_EXISTS_ERRORS = "该评论不存在";
 
+    private static final String BLOG_NOT_EXISTS_ERRORS = "该博客不存在";
+
     //General 5001XX
     public static Meta GENERAL_SUCCESS = new Meta(0, RESPONSE_SUCCESS);
     public static Meta GENERAL_SERVER_ERROR = new Meta(500100, SERVER_ERROR);
@@ -54,4 +56,7 @@ public class StatusConstant {
 
     //Comment
     public static Meta COMMENT_NOT_EXISTS = new Meta(500401, COMMENT_NOT_EXISTS_ERRORS);
+
+    // Blog
+    public static Meta BLOG_NOT_EXISTS = new Meta(500401, BLOG_NOT_EXISTS_ERRORS);
 }

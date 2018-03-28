@@ -37,4 +37,19 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
      * @return
      */
     Page<Blog> findByCategory(Category category, Pageable pageable);
+
+    /**
+     *  通过用户id和博客id删除
+     * @param id
+     * @param userId
+     * @return
+     */
+    Integer deleteByIdAndUserId(Long id, Long userId);
+
+    /**
+     *  通过用户id获取博客列表
+     * @param userId
+     * @return
+     */
+    Page<Blog> findBlogsByUserId(Long userId, Pageable pageable);
 }

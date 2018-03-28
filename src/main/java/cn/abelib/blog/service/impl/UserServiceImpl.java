@@ -55,10 +55,8 @@ public class UserServiceImpl implements UserService{
         if (resultCount > 0){
             return Response.failed(StatusConstant.ACCOUNT_ALREADY_EXISTS);
         }
-        user.setRole(StatusConstant.Role.ROLE_CUSTOMER);
         String dbPassword = MD5Util.dbPassword(user.getPassword());
         user.setPassword(dbPassword);
-        user.setRole(StatusConstant.Role.ROLE_CUSTOMER);
 
         User saveUser = userRepository.save(user);
         if (saveUser == null){
@@ -87,8 +85,7 @@ public class UserServiceImpl implements UserService{
         User updateUser = userRepository.findOne(user.getId());
         updateUser.setNickname(user.getNickname());
         updateUser.setEmail(user.getEmail());
-        updateUser.setAvatar(user.getAvatar());
-        updateUser.setRole(user.getRole());
+        updateUser.setAvatarId(user.getAvatarId());
 
         User saveUser = userRepository.save(user);
         if (saveUser == null){
@@ -99,7 +96,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Response<String> checkAuthorRole(User user) {
-        if (user != null && user.getRole() == StatusConstant.Role.ROLE_AUTHER){
+        if (user != null){
             return Response.success(StatusConstant.GENERAL_SUCCESS);
         }
         return Response.failed(StatusConstant.GENERAL_SERVER_ERROR);

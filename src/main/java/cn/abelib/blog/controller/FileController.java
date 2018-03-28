@@ -24,7 +24,7 @@ import java.util.List;
 // 允许所有域名访问
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/portal/file")
 public class FileController {
     @Autowired
     private FileService fileService;
@@ -32,24 +32,24 @@ public class FileController {
     @Value("localhost")
     private String serverAddress;
 
-    @Value("8081")
+    @Value("8080")
     private String serverPort;
-
-    /**
-     *  返回最新的20条数据
-     * @return
-     */
-    @GetMapping("/")
-    public Response getLatest(){
-        List<File> fileList = fileService.listFileByPage(0, 20);
-        return Response.failed(StatusConstant.GENERAL_SUCCESS);
-    }
-
-    @GetMapping("/{pageIndex}/{pageSize}")
-    public Response getFiles(@PathVariable int pageIndex, @PathVariable int pageSize){
-        List<File> fileList = fileService.listFileByPage(pageIndex, pageSize);
-        return Response.failed(StatusConstant.GENERAL_SUCCESS);
-    }
+//
+//    /**
+//     *  返回最新的20条数据
+//     * @return
+//     */
+//    @GetMapping("/")
+//    public Response getLatest(){
+//        List<File> fileList = fileService.listFileByPage(0, 20);
+//        return Response.failed(StatusConstant.GENERAL_SUCCESS);
+//    }
+//
+//    @GetMapping("/{pageIndex}/{pageSize}")
+//    public Response getFiles(@PathVariable int pageIndex, @PathVariable int pageSize){
+//        List<File> fileList = fileService.listFileByPage(pageIndex, pageSize);
+//        return Response.failed(StatusConstant.GENERAL_SUCCESS);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> getInfo(@PathVariable String id){
@@ -99,11 +99,9 @@ public class FileController {
      * @return
      */
     @PostMapping("/upload")
-    public Response upload(@RequestParam("file")MultipartFile multipartFile){
+    public Response upload(MultipartFile multipartFile){
         File file;
         File f;
-
-
         try {
             f = new File(multipartFile.getOriginalFilename(), multipartFile.getContentType(), multipartFile.getSize(), multipartFile.getBytes());
             f.setMd5(MD5Util.getMd5((FileInputStream)multipartFile.getInputStream(), multipartFile.getSize()));

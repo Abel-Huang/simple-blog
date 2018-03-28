@@ -33,13 +33,13 @@ public class CategoryServiceTest {
 
     @Test
     public void removeCategoryTest(){
-        categoryService.removeCategory(2L);
+//        categoryService.removeCategory(2L);
     }
 
     @Test
     public void getCategoryByIdTest(){
-        Category category = categoryService.getCategoryById(1L);
-        System.err.println(category.toString());
+//        Category category = categoryService.getCategoryById(1L);
+//        System.err.println(category.toString());
     }
 
     @Test

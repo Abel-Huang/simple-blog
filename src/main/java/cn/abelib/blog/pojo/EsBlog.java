@@ -197,4 +197,5 @@ public class EsBlog implements Serializable {
                 "Blog[id='%s', title='%s', summary='%s', content='%s']",
                 id, title, summary, content);
     }
+
 }
